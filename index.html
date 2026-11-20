@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jin | Engineering Portfolio</title>
+<style>
+  :root {
+    --ink: #1b1f24;
+    --muted: #5a6470;
+    --line: #d9dee4;
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --accent: #1f4e8c;
+    --accent-soft: #e6eef8;
+    --todo: #b35c00;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  a { color: var(--accent); }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255,255,255,0.95);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(6px);
+  }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; }
+  nav .brand { font-weight: 700; letter-spacing: 0.02em; text-decoration: none; color: var(--ink); }
+  nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: 0.95rem; }
+  nav ul a:hover { color: var(--accent); }
+
+  .wrap { max-width: 960px; margin: 0 auto; }
+
+  /* ---------- Hero ---------- */
+  header.hero { padding: 90px 24px 70px; border-bottom: 1px solid var(--line); background: var(--card); }
+  .hero .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+  .hero h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.4rem, 6vw, 3.6rem); margin: 10px 0 12px; line-height: 1.1; }
+  .hero p { font-size: 1.15rem; color: var(--muted); max-width: 620px; margin: 0; }
+  .hero .btns { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.ghost { border: 1px solid var(--accent); color: var(--accent); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 70px 24px; border-bottom: 1px solid var(--line); }
+  section h2 { font-family: Georgia, "Times New Roman", serif; font-size: 2rem; margin: 0 0 8px; }
+  section .lede { color: var(--muted); margin: 0 0 32px; }
+
+  /* Table of contents */
+  .toc ol { margin: 0; padding-left: 20px; }
+  .toc li { margin: 6px 0; }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 220px 1fr; gap: 36px; align-items: start; }
+  @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+  /* Projects */
+  .project { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 36px; margin-bottom: 40px; }
+  .project .tag { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 0.8rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+  .project h3 { font-family: Georgia, "Times New Roman", serif; font-size: 1.7rem; margin: 12px 0 4px; }
+  .project .meta { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+  .project h4 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin: 28px 0 8px; }
+  .project ul { padding-left: 20px; }
+  .project table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.95rem; }
+  .project th, .project td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  .project th { background: var(--bg); }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 16px 0; }
+  figure { margin: 0; }
+  figure img { width: 100%; border-radius: 8px; display: block; }
+  figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 6px; }
+
+  /* Placeholder boxes: replace with real <img> tags */
+  .ph {
+    aspect-ratio: 4 / 3;
+    border: 2px dashed var(--line); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    color: var(--muted); font-size: 0.85rem; padding: 12px; background: var(--bg);
+  }
+  .ph.portrait { aspect-ratio: 1 / 1; border-radius: 50%; }
+
+  /* Draft notes: delete these before the final */
+  .todo { color: var(--todo); font-style: italic; }
+
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 12px 0; }
+  .metric { border-left: 4px solid var(--accent); background: var(--bg); padding: 12px 16px; border-radius: 4px; }
+  .metric strong { display: block; }
+
+  /* Resume */
+  .resume { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 36px; }
+  .resume h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 4px; margin: 26px 0 10px; }
+  .resume h3:first-child { margin-top: 0; }
+  .resume .row { display: flex; justify-content: space-between; flex-wrap: wrap; font-weight: 600; }
+  .resume .row span:last-child { font-weight: 400; color: var(--muted); }
+
+  footer { padding: 40px 24px; text-align: center; color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">JIN</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resume">Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ================= TITLE ================= -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">Engineering Portfolio</div>
+    <h1>Jin <span class="todo">[Last Name]</span></h1>
+    <p><span class="todo">[Major]</span> student at the University of Washington Tacoma and Air Force ROTC cadet. I like building hardware and understanding how it works.</p>
+    <div class="btns">
+      <a class="btn primary" href="#projects">View Projects</a>
+      <a class="btn ghost" href="#resume">Resume</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= TABLE OF CONTENTS ================= -->
+<section class="toc">
+  <div class="wrap">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#about">About Me</a></li>
+      <li><a href="#projects">Projects</a>
+        <ol>
+          <li><a href="#pc">Custom PC Build</a></li>
+          <li><a href="#car">Magnetic-Powered 3D-Printed Car</a></li>
+        </ol>
+      </li>
+      <li><a href="#resume">Resume</a></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <h2>About Me</h2>
+    <p class="lede">Who I am and what drives my work.</p>
+    <div class="about-grid">
+      <!-- To add your photo: replace the div below with
+           <img src="images/headshot.jpg" alt="Photo of Jin" style="width:100%;border-radius:50%;"> -->
+      <div class="ph portrait">Headshot photo</div>
+      <div>
+        <p>I'm Jin, a <span class="todo">[year, e.g. sophomore]</span> studying <span class="todo">[major]</span> at UW Tacoma. I'm also a cadet in Air Force ROTC, where I'm building the leadership, discipline, and teamwork I want to bring to engineering.</p>
+        <p><span class="todo">[2–3 sentences: why engineering? What got you into building things? Your dad's service and how it shapes your work ethic could fit here if you want.]</span></p>
+        <p><span class="todo">[1–2 sentences: what kind of internship or career you're aiming for.]</span></p>
+        <p><strong>Interests:</strong> PC hardware, CAD and 3D printing, <span class="todo">[add more]</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <div class="wrap">
+    <h2>Projects</h2>
+    <p class="lede">Each project covers the goal, my role, my process, the solution, and its impact.</p>
+
+    <!-- ---------- PROJECT 1: PC BUILD ---------- -->
+    <article class="project" id="pc">
+      <span class="tag">Project 01 · Hardware</span>
+      <h3>Custom PC Build</h3>
+      <div class="meta">Solo project · <span class="todo">[date built]</span> · Documented through disassembly and reassembly</div>
+
+      <h4>Project Description</h4>
+      <p>I designed and built a desktop computer from parts I selected and bought myself. The PC needed to handle two demanding jobs: high-refresh-rate gaming and running CAD software for my engineering classes. The main challenge was choosing compatible parts that met both needs within my budget <span class="todo">[budget, if you want to share]</span>.</p>
+
+      <h4>My Role</h4>
+      <p>This was a solo project. I researched and chose every part, checked compatibility, assembled the system, installed the software, and tested it. For this portfolio, I partly took the PC apart again to document each part and explain what it does.</p>
+
+      <h4>My Process</h4>
+      <ul>
+        <li><strong>Set requirements:</strong> defined what the PC had to do (gaming at my monitor's 165 Hz refresh rate, and smooth CAD) before choosing any parts.</li>
+        <li><strong>Selected parts:</strong> <span class="todo">[how you compared options, e.g. benchmarks, reviews, compatibility checker like PCPartPicker]</span></li>
+        <li><strong>Assembled and tested:</strong> <span class="todo">[order you built it in, any problems you hit and how you fixed them]</span></li>
+        <li><strong>Documented:</strong> removed the SSD, power supply, CPU cooler (to show the CPU), GPU, and RAM, photographed each one, then reassembled and re-tested the system.</li>
+      </ul>
+
+      <table>
+        <tr><th>Component</th><th>Brand / Model</th><th>Key Specs</th><th>Why I Chose It</th></tr>
+        <tr><td>CPU</td><td class="todo">[ ]</td><td class="todo">[cores / clock]</td><td class="todo">[ ]</td></tr>
+        <tr><td>CPU Cooler</td><td class="todo">[ ]</td><td class="todo">[air / liquid]</td><td class="todo">[ ]</td></tr>
+        <tr><td>GPU</td><td class="todo">[ ]</td><td class="todo">[VRAM]</td><td class="todo">[ ]</td></tr>
+        <tr><td>RAM</td><td class="todo">[ ]</td><td class="todo">[GB / speed]</td><td class="todo">[ ]</td></tr>
+        <tr><td>SSD</td><td class="todo">[ ]</td><td class="todo">[capacity / type]</td><td class="todo">[ ]</td></tr>
+        <tr><td>Power Supply</td><td class="todo">[ ]</td><td class="todo">[wattage / rating]</td><td class="todo">[ ]</td></tr>
+        <tr><td>Motherboard</td><td class="todo">[ ]</td><td class="todo">[ ]</td><td class="todo">[ ]</td></tr>
+        <tr><td>Tools</td><td colspan="3" class="todo">[screwdriver, anti-static strap, thermal paste, software used, etc.]</td></tr>
+      </table>
+
+      <!-- To add photos: put them in an "images" folder, then replace each
+           <div class="ph">...</div> with <img src="images/FILENAME.jpg" alt="description"> -->
+      <div class="gallery">
+        <figure><div class="ph">Photo: full PC, side panel off</div><figcaption>The completed build</figcaption></figure>
+        <figure><div class="ph">Photo: CPU with cooler removed</div><figcaption>CPU</figcaption></figure>
+        <figure><div class="ph">Photo: GPU removed</div><figcaption>Graphics card</figcaption></figure>
+        <figure><div class="ph">Photo: RAM / SSD / PSU</div><figcaption>Memory, storage, and power</figcaption></figure>
+      </div>
+
+      <h4>My Solution</h4>
+      <p>The finished PC <span class="todo">[1–2 sentences on the final system and how it performs]</span>.</p>
+
+      <h4>My Impact</h4>
+      <p>I set success metrics at the start and tested the PC against them:</p>
+      <div class="metrics">
+        <div class="metric"><strong>Stability</strong>No system crashes · <span class="todo">[result]</span></div>
+        <div class="metric"><strong>Gaming</strong>Fortnite on max settings at 165 fps to match my 165 Hz monitor · <span class="todo">[result]</span></div>
+        <div class="metric"><strong>CAD</strong>Runs my magnetic car model, my largest CAD file, smoothly · <span class="todo">[result]</span></div>
+      </div>
+      <p><span class="todo">[What you learned, and how the PC supports your schoolwork now.]</span></p>
+    </article>
+
+    <!-- ---------- PROJECT 2: MAGNETIC CAR ---------- -->
+    <article class="project" id="car">
+      <span class="tag">Project 02 · Design &amp; Fabrication</span>
+      <h3>Magnetic-Powered 3D-Printed Car</h3>
+      <div class="meta"><span class="todo">[Solo or team]</span> · <span class="todo">[dates]</span> · CAD, 3D printing, electromagnetism</div>
+
+      <h4>Project Description</h4>
+      <p>The goal was to design and 3D print a small toy car that moves using electromagnetism instead of a motor. An AA battery and magnets create current through a copper wire connected to the car, which produces motion. The car runs on a track made from a 6 in × 18 in sheet of 0.025 in aluminum. <span class="todo">[Main problems you expected to solve, e.g. weight, friction, alignment.]</span></p>
+
+      <h4>My Role</h4>
+      <p><span class="todo">[Solo, or who you worked with and what you were responsible for.]</span></p>
+
+      <h4>My Process</h4>
+      <ul>
+        <li><strong>Concept:</strong> <span class="todo">[how the magnet + battery + copper wire setup produces motion, in your own words]</span></li>
+        <li><strong>Power source:</strong> chose an AA battery over an AAA. <span class="todo">[your reason]</span></li>
+        <li><strong>CAD design:</strong> <span class="todo">[software used, design changes]</span></li>
+        <li><strong>Printing &amp; assembly:</strong> <span class="todo">[printer, material, problems and fixes]</span></li>
+        <li><strong>Testing:</strong> <span class="todo">[what you tested and what you changed]</span></li>
+      </ul>
+
+      <div class="gallery">
+        <figure><div class="ph">Screenshot: CAD model</div><figcaption>CAD model</figcaption></figure>
+        <figure><div class="ph">Photo: printed parts</div><figcaption>3D-printed parts</figcaption></figure>
+        <figure><div class="ph">Photo: car on aluminum track</div><figcaption>Final car on the track</figcaption></figure>
+      </div>
+      <!-- Optional: embed a YouTube video of the car running:
+           <iframe width="100%" height="400" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
+
+      <h4>My Solution</h4>
+      <p><span class="todo">[Describe the final car and how well it worked.]</span></p>
+
+      <h4>My Impact</h4>
+      <div class="metrics">
+        <div class="metric"><strong>Success metric</strong><span class="todo">[e.g. car travels the full 18 in track]</span></div>
+        <div class="metric"><strong>Result</strong><span class="todo">[what actually happened]</span></div>
+      </div>
+      <p><span class="todo">[What you learned.]</span></p>
+    </article>
+
+  </div>
+</section>
+
+<!-- ================= RESUME ================= -->
+<section id="resume">
+  <div class="wrap">
+    <h2>Resume</h2>
+    <p class="lede">
+      <!-- To offer a PDF download: put resume.pdf next to this file, then remove the todo span below -->
+      <a href="resume.pdf">Download PDF</a> <span class="todo">(add resume.pdf)</span>
+    </p>
+    <div class="resume">
+      <h3>Education</h3>
+      <div class="row"><span>University of Washington Tacoma, <span class="todo">[Degree, Major]</span></span><span class="todo">[Expected grad date]</span></div>
+      <p>Relevant coursework: TME 221 Statics, <span class="todo">[others]</span></p>
+
+      <h3>Projects</h3>
+      <div class="row"><span>Custom PC Build</span><span class="todo">[date]</span></div>
+      <ul>
+        <li>Selected and assembled PC components to meet gaming and CAD performance requirements</li>
+        <li class="todo">[another action-verb bullet]</li>
+      </ul>
+      <div class="row"><span>Magnetic-Powered 3D-Printed Car</span><span class="todo">[date]</span></div>
+      <ul>
+        <li>Designed a battery- and magnet-driven toy car in CAD and fabricated it with 3D printing</li>
+        <li class="todo">[another action-verb bullet]</li>
+      </ul>
+
+      <h3>Work Experience</h3>
+      <div class="row"><span class="todo">[Job title, Company]</span><span class="todo">[dates]</span></div>
+      <ul><li class="todo">[action-verb bullet]</li></ul>
+
+      <h3>Leadership</h3>
+      <div class="row"><span>Cadet, Air Force ROTC</span><span class="todo">[dates]</span></div>
+      <ul><li class="todo">[action-verb bullet, e.g. led a flight during a takeover]</li></ul>
+
+      <h3>Skills</h3>
+      <p><strong>Technical:</strong> PC hardware assembly, CAD (<span class="todo">[software]</span>), 3D printing, <span class="todo">[more]</span><br>
+         <strong>Languages:</strong> <span class="todo">[e.g. English, Japanese, and level]</span></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Jin <span class="todo">[Last Name]</span> · <a href="mailto:you@example.com">you@example.com</a> <span class="todo">(your email)</span>
+</footer>
+
+</body>
+</html>
